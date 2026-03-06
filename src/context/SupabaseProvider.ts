@@ -1,1 +1,11 @@
-import { SupabaseClient } from '@supabase/supabase-js'; import { createContext, ReactNode, useContext } from 'react'; const SupabaseContext = createContext<SupabaseClient | null>(null); export const SupabaseProvider = ({ children }: { children: ReactNode }) => { const supabase = new SupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!); return <SupabaseContext.Provider value={supabase}>{children}</SupabaseContext.Provider>; }; export const useSupabase = () => useContext(SupabaseContext);
+import { SupabaseClient } from '@supabase/supabase-js';
+import { createContext, ReactNode, useContext } from 'react';
+
+const SupabaseContext = createContext<SupabaseClient | null>(null);
+
+export const SupabaseProvider = ({ children }: { children: ReactNode }) => {
+  const supabase = new SupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+  return <SupabaseContext.Provider value={supabase}>{children}</SupabaseContext.Provider>;
+};
+
+export const useSupabase = () => useContext(SupabaseContext);
