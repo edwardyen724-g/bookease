@@ -1,1 +1,45 @@
-import { NextApiRequest, NextApiResponse } from 'next'; import { getAuth } from '@supabase/supabase-js'; import { supabase } from '../../../lib/supabaseClient'; interface AuthedRequest extends NextApiRequest { user?: { id: string }; } const bookings: Map<string, number> = new Map(); async function handler(req: AuthedRequest, res: NextApiResponse) { const auth = getAuth(req.headers.cookie); if (!auth.user) { return res.status(401).json({ message: 'Unauthorized' }); } try { switch (req.method) { case 'GET': return await fetchBookings(req, res, auth.user.id); case 'POST': return await createBooking(req, res, auth.user.id); default: return res.status(405).json({ message: 'Method Not Allowed' }); } } catch (error) { return res.status(500).json({ message: error instanceof Error ? error.message : String(error) }); } } async function fetchBookings(req: AuthedRequest, res: NextApiResponse, userId: string) { const { data, error } = await supabase .from('bookings') .select('*') .eq('user_id', userId); if (error) { return res.status(500).json({ message: error.message }); } return res.status(200).json(data); } async function createBooking(req: AuthedRequest, res: NextApiResponse, userId: string) { const { date, time, clientName } = req.body; // Missing booking insertion code } export default handler;
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getAuth } from '@supabase/supabase-js';
+import { supabase } from '../../../lib/supabaseClient';
+
+interface AuthedRequest extends NextApiRequest { user?: { id: string }; }
+
+const bookings: Map<string, number> = new Map();
+
+async function handler(req: AuthedRequest, res: NextApiResponse) {
+  const auth = getAuth(req.headers.cookie);
+  if (!auth.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    switch (req.method) {
+      case 'GET':
+        return await fetchBookings(req, res, auth.user.id);
+      case 'POST':
+        return await createBooking(req, res, auth.user.id);
+      default:
+        return res.status(405).json({ message: 'Method Not Allowed' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error instanceof Error ? error.message : String(error) });
+  }
+}
+
+async function fetchBookings(req: AuthedRequest, res: NextApiResponse, userId: string) {
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('*')
+    .eq('user_id', userId);
+  if (error) {
+    return res.status(500).json({ message: error.message });
+  }
+  return res.status(200).json(data);
+}
+
+async function createBooking(req: AuthedRequest, res: NextApiResponse, userId: string) {
+  const { date, time, clientName } = req.body;
+  // Missing booking insertion code
+}
+
+export default handler;
