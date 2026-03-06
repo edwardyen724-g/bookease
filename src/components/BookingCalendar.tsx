@@ -1,0 +1,1 @@
+import React from 'react'; const BookingCalendar: React.FC = () => { return <div>Booking Calendar</div>; }; export default BookingCalendar;
