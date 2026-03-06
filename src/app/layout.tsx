@@ -1,32 +1,23 @@
-import React from 'react';
+import { ReactNode } from 'react';
+import './globals.css';
 import { Metadata } from 'next';
-import '../styles/globals.css';
+import { SupabaseProvider } from '../context/SupabaseProvider';
 
 export const metadata: Metadata = {
-  title: 'BookEase',
-  description: 'Effortless booking and rescheduling for local event planners and service providers.',
+  title: "BookEase | Effortless booking tailored for wellness and fitness pros.",
+  description: "Transform Your Booking Experience with BookEase",
 };
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
-      </head>
-      <body className="font-roboto bg-gray-100">
-        <header className="bg-white shadow-md p-4">
-          <h1 className="text-2xl font-bold">Transform Your Booking Experience with BookEase</h1>
-        </header>
-        <main className="container mx-auto py-6">
-          {children}
-        </main>
-        <footer className="bg-white mt-6 p-4 shadow-md">
-          <p className="text-center text-gray-600">© 2023 BookEase. All rights reserved.</p>
-        </footer>
+      <body>
+        <SupabaseProvider>
+          <main className="container">
+            {children}
+          </main>
+        </SupabaseProvider>
       </body>
     </html>
   );
-};
-
-export default Layout;
+}
