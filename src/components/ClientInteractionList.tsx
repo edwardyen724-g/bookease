@@ -1,0 +1,1 @@
+import React from 'react'; const ClientInteractionList: React.FC = () => { return <div>Client Interaction List</div>; }; export default ClientInteractionList;
