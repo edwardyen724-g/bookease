@@ -1,74 +1,47 @@
-import { useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const LandingPage = () => {
+  const { register, handleSubmit } = useForm();
 
-interface BookingForm {
-  name: string;
-  email: string;
-  eventDate: string;
-}
-
-export default function Home() {
-  const { register, handleSubmit } = useForm<BookingForm>();
-
-  const onSubmit = async (data: BookingForm) => {
+  const onSubmit = async (data: { email: string }) => {
     try {
-      const { error } = await supabase.from('bookings').insert([data]);
-      if (error) throw new Error(error.message);
-      alert('Booking submitted successfully!');
+      // Here you can integrate Supabase for email capture or other functionalities
+      console.log(data);
     } catch (err) {
-      alert(err instanceof Error ? err.message : String(err));
+      console.error(err instanceof Error ? err.message : String(err));
     }
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <h1 className="text-4xl font-bold text-center">Transform Your Booking Experience with BookEase</h1>
-      <p className="mt-4 text-lg text-center">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-4xl font-bold text-center mb-4">Transform Your Booking Experience with BookEase</h1>
+      <p className="text-lg mb-8 text-center">
         Effortless booking and rescheduling for local event planners and service providers.
       </p>
-      
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 w-full max-w-md">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4 py-4 bg-white shadow-md rounded">
         <input
-          {...register('name', { required: true })}
-          type="text"
-          placeholder="Your Name"
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-        />
-        <input
-          {...register('email', { required: true })}
           type="email"
-          placeholder="Your Email"
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          placeholder="Enter your email"
+          {...register('email', { required: true })}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        <input
-          {...register('eventDate', { required: true })}
-          type="date"
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-        />
-        <button
-          type="submit"
-          className="w-full py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
-        >
-          Book Now
+        <button type="submit" className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Get Started
         </button>
       </form>
-      
-      <div className="mt-10 text-center">
-        <h2 className="text-2xl font-semibold">MVP Features</h2>
-        <ul className="mt-2 space-y-2">
-          <li>Intuitive booking calendar with drag-and-drop functionality.</li>
-          <li>One-click rescheduling options directly from confirmation emails.</li>
-          <li>Automated reminders for upcoming bookings and reschedules.</li>
-          <li>Customizable booking forms to capture important client information.</li>
-          <li>Simple dashboard for tracking bookings and client interactions.</li>
+      <div className="mt-12 space-y-4">
+        <h2 className="text-2xl font-semibold">MVP Features:</h2>
+        <ul className="list-disc pl-5">
+          <li>Intuitive booking calendar with drag-and-drop functionality</li>
+          <li>One-click rescheduling options directly from confirmation emails</li>
+          <li>Automated reminders for upcoming bookings and reschedules</li>
+          <li>Customizable booking forms to capture important client information</li>
+          <li>Simple dashboard for tracking bookings and client interactions</li>
         </ul>
       </div>
     </main>
   );
-}
+};
+
+export default LandingPage;
