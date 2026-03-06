@@ -1,45 +1,69 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../../lib/supabaseClient';
-import { v4 as uuidv4 } from 'uuid';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getAuth } from '@supabase/supabase-js';
+import { supabase } from '../../../lib/supabaseClient';  // Adjust the path as necessary
 
 interface AuthedRequest extends NextApiRequest {
-  user?: { id: string };
+  user?: { id: string }; // Assuming user object contains id
 }
 
-const bookings: Record<string, any[]> = new Map();
+const bookings: Map<string, number> = new Map(); // Simple rate limit: Map of user id to request count
 
-const createBooking = async (req: AuthedRequest, res: NextApiResponse) => {
+async function handler(req: AuthedRequest, res: NextApiResponse) {
+  const auth = getAuth(req.headers.cookie); // Extract user from request
+  if (!auth.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
   try {
-    const { user } = req;
-    if (!user) {
-      return res.status(401).json({ message: "Unauthorized" });
+    switch (req.method) {
+      case 'GET':
+        return await fetchBookings(req, res, auth.user.id);
+      case 'POST':
+        return await createBooking(req, res, auth.user.id);
+      default:
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
-
-    const { clientName, eventDate, details } = req.body;
-    if (!clientName || !eventDate || !details) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    const bookingId = uuidv4();
-    const { data, error } = await supabase
-      .from('bookings')
-      .insert([{ id: bookingId, userId: user.id, clientName, eventDate, details }]);
-
-    if (error) {
-      return res.status(500).json({ message: err instanceof Error ? err.message : String(error) });
-    }
-
-    return res.status(201).json(data);
   } catch (err) {
     return res.status(500).json({ message: err instanceof Error ? err.message : String(err) });
   }
-};
-
-export default async function handler(req: AuthedRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    await createBooking(req, res);
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
 }
+
+async function fetchBookings(req: AuthedRequest, res: NextApiResponse, userId: string) {
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('*')
+    .eq('user_id', userId);
+  
+  if (error) {
+    return res.status(500).json({ message: error.message });
+  }
+
+  return res.status(200).json(data);
+}
+
+async function createBooking(req: AuthedRequest, res: NextApiResponse, userId: string) {
+  const { date, time, clientName } = req.body;
+
+  if (!date || !time || !clientName) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  const limit = bookings.get(userId) || 0;
+  if (limit >= 5) { // Example rate limiting: max 5 requests per user
+    return res.status(429).json({ message: 'Rate limit exceeded. Try again later.' });
+  }
+
+  const { data, error } = await supabase
+    .from('bookings')
+    .insert([{ user_id: userId, date, time, client_name: clientName }]);
+  
+  bookings.set(userId, limit + 1); // Increment the request count for this user
+
+  if (error) {
+    return res.status(500).json({ message: error.message });
+  }
+
+  return res.status(201).json(data);
+}
+
+export default handler;
