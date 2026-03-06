@@ -1,0 +1,1 @@
+import React from 'react'; const ReminderList: React.FC = () => { return <div>Reminder List</div>; }; export default ReminderList;
