@@ -1,1 +1,3 @@
-export type AuthedRequest = { userId: string; };
+export interface AuthedRequest {
+  user?: { id: string };
+}
