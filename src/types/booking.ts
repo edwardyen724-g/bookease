@@ -1,0 +1,1 @@
+export type Booking = { id: string; title: string; date: string; };
