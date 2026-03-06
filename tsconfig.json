@@ -1,29 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": true,
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
     "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": ".",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["src/*"],
-      "lib/*": ["src/lib/*"],
-      "context/*": ["src/context/*"],
-      "components/*": ["src/components/*"],
-      "app/*": ["src/app/*"],
-      "tests/*": ["tests/*"]
+      "@/*": ["./*"],
+      "lib/*": ["lib/*"],
+      "context/*": ["context/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }
