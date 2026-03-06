@@ -1,0 +1,1 @@
+export const db = {}; // Stub for database operations
