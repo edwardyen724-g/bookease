@@ -7,3 +7,4 @@ export interface Booking {
   user_id?: string;
   details?: string;
 }
+
