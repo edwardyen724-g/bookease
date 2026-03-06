@@ -1,45 +1,30 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import styles from './page.module.css';
 
-const LandingPage = () => {
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = async (data: { email: string }) => {
-    try {
-      // Here you can integrate Supabase for email capture or other functionalities
-      console.log(data);
-    } catch (err) {
-      console.error(err instanceof Error ? err.message : String(err));
-    }
-  };
-
+const LandingPage: React.FC = () => {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-center mb-4">Transform Your Booking Experience with BookEase</h1>
-      <p className="text-lg mb-8 text-center">
-        Effortless booking and rescheduling for local event planners and service providers.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4 py-4 bg-white shadow-md rounded">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          {...register('email', { required: true })}
-          className="w-full p-2 border border-gray-300 rounded mb-4"
-        />
-        <button type="submit" className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Get Started
-        </button>
-      </form>
-      <div className="mt-12 space-y-4">
-        <h2 className="text-2xl font-semibold">MVP Features:</h2>
-        <ul className="list-disc pl-5">
-          <li>Intuitive booking calendar with drag-and-drop functionality</li>
-          <li>One-click rescheduling options directly from confirmation emails</li>
-          <li>Automated reminders for upcoming bookings and reschedules</li>
-          <li>Customizable booking forms to capture important client information</li>
-          <li>Simple dashboard for tracking bookings and client interactions</li>
+    <main className={styles.container}>
+      <section className={styles.hero}>
+        <h1>Transform Your Booking Experience with BookEase</h1>
+        <h2>Effortless booking tailored for wellness and fitness pros.</h2>
+        <p>
+          Experience seamless appointment management with our customizable booking
+          forms, automated email reminders, real-time Google Calendar integration, and
+          an intuitive dashboard to keep your business organized and efficient.
+        </p>
+        <button className={styles.ctaButton}>Get Started</button>
+      </section>
+
+      <section className={styles.features}>
+        <h3>MVP Features</h3>
+        <ul>
+          <li>Customizable booking form templates specific to wellness and fitness industries.</li>
+          <li>Automated email reminders for clients about upcoming appointments.</li>
+          <li>Integration with Google Calendar for real-time scheduling updates.</li>
+          <li>Simple dashboard for managing appointments, cancellations, and rescheduling.</li>
+          <li>Analytics on booking trends and client retention metrics.</li>
         </ul>
-      </div>
+      </section>
     </main>
   );
 };
