@@ -1,44 +1,44 @@
 # BookEase
 
-> Effortless booking and rescheduling for local event planners and service providers.
+> Effortless booking tailored for wellness and fitness pros.
 
 **Status:** 🚧 In Development
 
 ## Problem
-Event planners and service providers often face confusing booking platforms and rigid rescheduling policies, leading to lost time and frustrated clients. BookEase simplifies this process, making it seamless and user-friendly.
+Small business owners struggle with clunky booking forms that hinder customer experience. BookEase simplifies this process with customizable templates designed for niche services.
 
 ## MVP Features
-- Intuitive booking calendar with drag-and-drop functionality
-- One-click rescheduling options directly from confirmation emails
-- Automated reminders for upcoming bookings and reschedules
-- Customizable booking forms to capture important client information
-- Simple dashboard for tracking bookings and client interactions
+- Customizable booking form templates specific to wellness and fitness industries.
+- Automated email reminders for clients about upcoming appointments.
+- Integration with Google Calendar for real-time scheduling updates.
+- Simple dashboard for managing appointments, cancellations, and rescheduling.
+- Analytics on booking trends and client retention metrics.
 
 ## Tech Stack
 - **Frontend:** Next.js 14 (App Router)
-- **Backend:** Supabase API / Supabase Edge Functions
+- **Backend:** Next.js API Routes
 - **Database:** Supabase Postgres
 - **Auth:** Supabase Auth
 - **Payments:** Stripe
 - **Hosting:** Vercel
 
 ## Architecture Notes
-Using Next.js provides a full-stack framework that integrates easily with Supabase for database operations and authentication. The App Router allows for a simplified routing structure, and Vercel offers seamless deployment and performance optimizations for the application.
+Using Next.js provides a seamless integration of frontend and backend, allowing for quick API development with API Routes. Supabase offers easy setup for Postgres and Authentication, speeding up the development process while ensuring scalability.
 
 ## User Stories
-- Intuitive Booking Calendar
-- One-Click Rescheduling
-- Automated Reminders
-- Customizable Booking Forms
-- Simple Dashboard
+- Create Custom Booking Templates
+- Automated Email Reminders
+- Integration with Google Calendar
+- Manage Appointments Dashboard
+- Analytics on Booking Trends
 - User Authentication
 
 ## Launch Checklist
-- [ ] Create and finalize landing page.
-- [ ] Develop user registration and login features.
-- [ ] Implement booking calendar functionality.
-- [ ] Set up email reminder system.
-- [ ] Test user authentication and error handling.
+- [ ] Finalize product design and branding
+- [ ] Develop landing page and sign-up form
+- [ ] Build core features outlined in MVP
+- [ ] Conduct user testing for functionality
+- [ ] Set up marketing strategy for launch
 
 ## Setup
 ```bash
