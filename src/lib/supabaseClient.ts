@@ -1,3 +1,1 @@
-export const supabase = {
-  // TODO: Implement Supabase client initialization
-};
+import { createClient } from '@supabase/supabase-js'; const supabase = createClient('your-supabase-url', 'your-supabase-key'); export { supabase };
