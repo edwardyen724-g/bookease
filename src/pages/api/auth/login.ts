@@ -23,7 +23,7 @@ export default async function handler(req: AuthedRequest, res: NextApiResponse) 
     });
 
     if (error) {
-      return res.status(401).json({ message: err instanceof Error ? err.message : String(err) });
+      return res.status(401).json({ message: error.message });
     }
 
     // Optionally store user information if needed
