@@ -1,10 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../../../lib/supabase';
 import { Booking } from '../../../types/booking'; // Assuming a Booking type is defined for TypeScript
-
-interface AuthedRequest extends NextApiRequest {
-  user?: { id: string };
-}
+import { AuthedRequest } from '../../../types/auth';
 
 const bookingsMap = new Map<string, { count: number; timestamp: number }>();
 
@@ -67,7 +64,8 @@ const handler = async (req: AuthedRequest, res: NextApiResponse) => {
 
     return res.setHeader('Allow', ['GET', 'PUT']).status(405).end(`Method ${req.method} Not Allowed`);
   } catch (err) {
-    return res.status(500).json({ message: err instanceof Error ? err.message : String(err) });
+    const msg = err instanceof Error ? err.message : String(err);
+    return res.status(500).json({ message: msg });
   }
 };
 
