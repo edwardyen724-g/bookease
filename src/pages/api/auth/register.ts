@@ -15,8 +15,8 @@ export default async function handler(req: AuthedRequest, res: NextApiResponse<R
   
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    return res.status(400).json({ error: 'Email and password must be strings.' });
   }
 
   try {
@@ -31,7 +31,6 @@ export default async function handler(req: AuthedRequest, res: NextApiResponse<R
 
     return res.status(200).json({ message: 'Registration successful', user });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    return res.status(500).json({ error: msg });
+    return res.status(500).json({ error: err instanceof Error ? err.message : String(err) });
   }
 }
