@@ -1,23 +1,24 @@
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './src/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/pages/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      colors: {
-        primary: '#4A90E2',
-        secondary: '#50E3C2',
-        accent: '#D0021B',
-        lightBackground: '#F5F7FA',
-        darkBackground: '#4A4A4A',
-      },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: ['Poppins', ...fontFamily.sans],
+        serif: ['Merriweather', ...fontFamily.serif],
+      },
+      colors: {
+        primary: '#4A90E2', // Customize as per your branding
+        secondary: '#7ED321', // Customize as per your branding
+        accent: '#F5A623', // Customize as per your branding
+        background: '#F7F7F7', // Customize as per your branding
+        text: '#333333', // Customize as per your branding
       },
     },
   },
