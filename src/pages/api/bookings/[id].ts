@@ -10,7 +10,7 @@ const bookingsMap = new Map<string, { count: number; timestamp: number }>();
 
 const rateLimit = (id: string) => {
   const currentTime = Date.now();
-  const { count = 0 } = bookingsMap.get(id) || { count: 0, timestamp: currentTime };
+  const { count = 0, timestamp = currentTime } = bookingsMap.get(id) || {};
 
   if (count >= 5 && currentTime - timestamp < 60000) {
     return false; // Rate limit exceeded
@@ -70,3 +70,5 @@ const handler = async (req: AuthedRequest, res: NextApiResponse) => {
     return res.status(500).json({ message: err instanceof Error ? err.message : String(err) });
   }
 };
+
+export default handler;
