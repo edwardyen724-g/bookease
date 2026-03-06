@@ -20,7 +20,8 @@
       "lib/*": ["src/lib/*"],
       "context/*": ["src/context/*"],
       "components/*": ["src/components/*"],
-      "app/*": ["src/app/*"]
+      "app/*": ["src/app/*"],
+      "tests/*": ["tests/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
